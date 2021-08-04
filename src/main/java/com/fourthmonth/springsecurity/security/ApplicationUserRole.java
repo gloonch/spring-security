@@ -1,7 +1,6 @@
 package com.fourthmonth.springsecurity.security;
 
 import com.google.common.collect.Sets;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
@@ -24,11 +23,17 @@ public enum ApplicationUserRole {
         return permissions;
     }
 
-    public Set<GrantedAuthority> getGrantedAuthorities(){
-        Set<SimpleGrantedAuthority> permissions = getPermissions().stream()
+    public Set<SimpleGrantedAuthority> getGrantedAuthorities() {
+//        Set<SimpleGrantedAuthority> permissions = getPermissions().stream()
+//                .map(permissions -> new SimpleGrantedAuthority(permissions.getPermission()))
+//                .collect(Collectors.toSet());
+//        permissions.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+//        return permissions;
+
+        Set<SimpleGrantedAuthority> authoritySet = getPermissions().stream()
                 .map(permissions -> new SimpleGrantedAuthority(permissions.getPermission()))
                 .collect(Collectors.toSet());
-        permissions.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
-        return permissions;
+        authoritySet.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+        return authoritySet;
     }
 }
