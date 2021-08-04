@@ -15,6 +15,7 @@ public class StudentManagementController {
             new Student(3, "Anna Smith")
     );
 
+//    Tom has only this api to use
     @GetMapping
     public List<Student> getAllStudents() {
         System.out.println("getAllStudents");
