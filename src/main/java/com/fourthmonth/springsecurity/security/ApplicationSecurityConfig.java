@@ -14,13 +14,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import java.util.concurrent.TimeUnit;
+
 import static com.fourthmonth.springsecurity.security.ApplicationUserPermission.COURSE_WRITE;
 import static com.fourthmonth.springsecurity.security.ApplicationUserRole.*;
 
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) // more sensible than antMatchers for controlling what role can access our resources
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+// more sensible than antMatchers for controlling what role can access our resources
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
@@ -47,7 +50,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/courses", true)
-                .and().rememberMe(); // defaults to 2 weeks
+                .and().rememberMe() // defaults to 2 weeks
+                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // extended expiration time up to this number
+                .key("somethingverysecured"); // the key for hashing those 2 values
     }
 
     @Override
