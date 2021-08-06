@@ -48,14 +48,18 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                    .loginPage("/login").permitAll()
+                    .loginPage("/login")
+                    .permitAll()
                     .defaultSuccessUrl("/courses", true)
+                    .usernameParameter("username") // modifies template parameters
+                    .passwordParameter("password") // modifies template parameters
                 .and()
                     .rememberMe() // defaults to 2 weeks
                     .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // extended expiration time up to this number
                     .key("somethingverysecured") // the key for hashing those 2 values
+                    .rememberMeParameter("remember-me") // modifies template parameters
                 .and()
-                .logout()
+                    .logout()
                     .logoutUrl("/logout")
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) // if csrf enabled delete this line
                     .clearAuthentication(true)
