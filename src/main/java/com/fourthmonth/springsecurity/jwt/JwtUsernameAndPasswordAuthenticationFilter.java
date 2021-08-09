@@ -22,9 +22,8 @@ import java.util.Date;
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
 
-    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager, AuthenticationManager authenticationManager1) {
-        super(authenticationManager);
-        this.authenticationManager = authenticationManager1;
+    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
